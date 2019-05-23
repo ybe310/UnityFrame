@@ -4,15 +4,42 @@ using UnityEngine;
 
 public class Root : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+	private const string Root_Name = "Root";
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+	private static Root instance;
+
+	public static Root Instance
+	{
+		get
+		{
+			if (instance == null)
+			{
+				GameObject obj = GameObject.Find(Root_Name);
+				if (obj != null)
+				{
+					instance = obj.GetComponent<Root>();
+				}
+			}
+			return instance;
+		}
+	}
+
+	public SystemManager mSysManager = SystemManager.Instance;
+
+
+
+	void Awake()
+	{
+		this.gameObject.name = Root_Name;
+	}
+
+	void Start()
+	{
+		mSysManager.InitSys();
+	}
+
+	void Update()
+	{
+		mSysManager.UpdateSys();
+	}
 }
