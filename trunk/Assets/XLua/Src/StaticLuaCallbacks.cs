@@ -605,9 +605,10 @@ namespace XLua
             try
             {
                 int n = LuaAPI.lua_gettop(L);
-                string s = String.Empty;
+				System.Text.StringBuilder s = new System.Text.StringBuilder();
+				s.AppendFormat("[Lua] {0} ", LuaWhere(L));
 
-                if (0 != LuaAPI.xlua_getglobal(L, "tostring"))
+				if (0 != LuaAPI.xlua_getglobal(L, "tostring"))
                 {
                     return LuaAPI.luaL_error(L, "can not get tostring in print:");
                 }
@@ -620,13 +621,13 @@ namespace XLua
                     {
                         return LuaAPI.lua_error(L);
                     }
-                    s += LuaAPI.lua_tostring(L, -1);
+                    s.Append(LuaAPI.lua_tostring(L, -1));
 
-                    if (i != n) s += "\t";
+                    if (i != n) s.Append("\t");
 
                     LuaAPI.lua_pop(L, 1);  /* pop result */
                 }
-                UnityEngine.Debug.Log("LUA: " + s);
+				LoggerHelper.Debug(s.ToString());
                 return 0;
             }
             catch (System.Exception e)
@@ -634,10 +635,19 @@ namespace XLua
                 return LuaAPI.luaL_error(L, "c# exception in print:" + e);
             }
         }
+
+		static string LuaWhere(IntPtr L)
+		{
+			int top = LuaAPI.lua_gettop(L);
+			LuaAPI.luaL_where(L, 1);
+			string str = LuaAPI.lua_tostring(L, -1);
+			LuaAPI.lua_settop(L, top);
+			return str;
+		}
 #endif
 
 #if !UNITY_SWITCH || UNITY_EDITOR
-        [MonoPInvokeCallback(typeof(LuaCSFunction))]
+		[MonoPInvokeCallback(typeof(LuaCSFunction))]
         internal static int LoadSocketCore(RealStatePtr L)
         {
             return LuaAPI.luaopen_socket_core(L);

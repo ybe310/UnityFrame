@@ -216,7 +216,7 @@ namespace XLua
             }
         }
 
-        public void ForEach<TKey, TValue>(Action<TKey, TValue> action)
+        public void ForEach<TKey, TValue>(Action<TKey, TValue, int, StringBuilder> action, int level = 0, StringBuilder sb = null)
         {
 #if THREAD_SAFE || HOTFIX_ENABLE
             lock (luaEnv.luaEnvLock)
@@ -237,7 +237,7 @@ namespace XLua
                             TValue val;
                             translator.Get(L, -2, out key);
                             translator.Get(L, -1, out val);
-                            action(key, val);
+                            action(key, val, level, sb);
                         }
                         LuaAPI.lua_pop(L, 1);
                     }
@@ -251,7 +251,46 @@ namespace XLua
 #endif
         }
 
-        public int Length
+		public string PrintTable(int _level = 0, StringBuilder _sb = null)
+		{
+			if (_sb == null)
+			{
+				_sb = new StringBuilder();
+			}
+			ForEach<object, object>(PrintParam, _level, _sb);
+
+			return _sb.ToString();
+		}
+
+		private void PrintParam(object _key, object _value, int _level, StringBuilder _sb)
+		{
+			for (int i = 0; i < _level; i++)
+			{
+				_sb.Append("  ");
+			}
+
+			_sb.AppendFormat("{0}", _key);
+			if (_value.GetType() == typeof(LuaTable))
+			{
+				_sb.Append(" : [table]");
+			}
+			else if (_value.GetType() == typeof(LuaFunction))
+			{
+				_sb.Append(" : [function]");
+			}
+			else
+			{
+				_sb.AppendFormat(" : {0}", _value);
+			}
+			_sb.Append('\n');
+
+			if (_value.GetType() == typeof(LuaTable))
+			{
+				(_value as LuaTable).PrintTable(++_level, _sb);
+			}
+		}
+
+		public int Length
         {
             get
             {
