@@ -2,17 +2,21 @@
 
 local _UIDemoView =
 {
-	a = 2;
-	b = "4455"
+	image=nil;
+	text = nil;
+	texture=nil;
+	a = "ppp2";
 }
 
 UIDemoView = {};
 
 function UIDemoView.New(obj)
 	local s = obj or {};
-	print("tttttttttttttt")
-	return setmetatable(s, { __index = _UIDemoView })
+	
+	return setmetatable(s, { __index = _UIDemoView})
 end
 
 
-print("UIDemoView")
+function _UIDemoView:Test()
+	print(self.a)	;
+end

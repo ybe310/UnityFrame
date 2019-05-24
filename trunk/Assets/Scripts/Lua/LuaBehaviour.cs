@@ -24,13 +24,12 @@ public class LuaBehaviour : MonoBehaviour
 	void Awake()
 	{
 		luaMgr.Init();
-		//luaMgr.Require(luaFile);
+		luaMgr.Require(luaFile);
 
 		luaClass = luaFile;
 		if (luaClass.IndexOf("/") > 0)
 			luaClass = luaClass.Substring(luaClass.LastIndexOf("/") + 1);
 
-		luaMgr.CallFunction("AAAA", 2);
 		object[] ret = luaMgr.CallFunction(luaClass + ".New");
 		if (ret == null || ret.Length == 0)
 		{
@@ -41,14 +40,11 @@ public class LuaBehaviour : MonoBehaviour
 			scriptEnv = ret[0] as LuaTable;
 		}
 
-		scriptEnv.Set("lb", this);
-		foreach (var injection in items)
-		{
-			scriptEnv.Set(injection.name, injection.value);
-		}
-
-		Debug.Log(scriptEnv.Get<LuaBehaviour>("lb").name);
-		
+		//scriptEnv.Set("lb", this);
+		// foreach (var injection in items)
+		// {
+		// 	scriptEnv.Set(injection.name, injection.value);
+		// }
 	}
 
 	void Start()
@@ -61,4 +57,9 @@ public class LuaBehaviour : MonoBehaviour
     {
         
     }
+
+	private void ForEachParam(object _key, object _value, int _level, System.Text.StringBuilder _sb)
+	{
+		
+	}
 }
