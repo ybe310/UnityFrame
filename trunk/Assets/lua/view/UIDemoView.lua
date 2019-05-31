@@ -1,14 +1,26 @@
-
+require "ctrl.UIDemoCtrl"
 
 local _UIDemoView =
 {
-	image=nil;
-	text = nil;
-	texture=nil;
-	a = "ppp2";
+--start
+	--Text
+	txt=nil;
+	--Image
+	img=nil;
+	--GameObject
+	obj=nil;
+	--GameObject[]
+	objs=nil;
+	--Button
+	btn=nil;
+	--Button
+	btn2=nil;
+--end
 }
 
-UIDemoView = {};
+UIDemoView ={};
+
+local ctrl = UIDemoCtrl;
 
 function UIDemoView.New(obj)
 	local s = obj or {};
@@ -16,7 +28,10 @@ function UIDemoView.New(obj)
 	return setmetatable(s, { __index = _UIDemoView})
 end
 
+function _UIDemoView:Awake()
+	
+end
 
-function _UIDemoView:Test()
-	print(self.a)	;
+function _UIDemoView:GetCtrl()
+	return ctrl;
 end

@@ -34,6 +34,16 @@ namespace BoEngine.UI
 			onClick = null;
 		}
 
+		public UIButton(Button _btn) : base(_btn.gameObject)
+		{
+			button = _btn;
+			if (button != null)
+			{
+				button.AddClick(OnClickListener);
+			}
+			onClick = null;
+		}
+
 
 		public void AddListener(UnityAction<object> _func)
 		{

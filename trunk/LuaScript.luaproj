@@ -154,7 +154,6 @@
     <Content Include="Assets\Lua.meta" />
     <Content Include="Assets\lua\Main.lua.meta" />
     <Content Include="Assets\lua\view.meta" />
-    <Content Include="Assets\lua\vtrl.meta" />
     <Content Include="Assets\Plugins.meta" />
     <Content Include="Assets\Plugins\Android.meta" />
     <Content Include="Assets\Plugins\Android\libs.meta" />
@@ -699,6 +698,7 @@
     <Content Include="Assets\XLua\Tutorial\LuaCallCSharp\LuaCallCs.unity.meta" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Lua\ctrl\UIDemoCtrl.lua" />
     <Compile Include="Assets\Lua\Main.lua" />
     <Compile Include="Assets\Lua\common\define.lua" />
     <Compile Include="Assets\lua\view\UIDemoView.lua" />

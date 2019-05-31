@@ -19,6 +19,7 @@ public class SystemManager
 	private List<ISystem> mSysList = new List<ISystem>()
 	{
 		LuaScriptManager.Instance,
+		UIManager.Instance,
 	};
 
 

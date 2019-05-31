@@ -6,7 +6,6 @@ print("XLua Start!!!!!!!!!!!");
 
 require "common.define"
 
---require "view.UIDemoView"
 
 
 function AAAA(args)
